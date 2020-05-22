@@ -1,11 +1,31 @@
-version: "3.3"
+version: "3.7"
 services:
-  db:
+  postgres:
+    container_name: gobarber_postgres
     build:
       context: ./Docker
-      dockerfile: db.Dockerfile
+      dockerfile: postgres.Dockerfile
     environment:
       POSTGRES_USER: docker
       POSTGRES_PASSWORD: docker
     ports:
       - "5432:5432"
+  mongodb:
+    container_name: gobarber_mongodb
+    restart: always
+    build:
+      context: ./Docker
+      dockerfile: mongo.Dockerfile
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: root
+      MONGO_INITDB_ROOT_PASSWORD: mongo
+    ports:
+      - "27017:27017"
+  redis:
+    container_name: gobarber_redis
+    restart: always
+    build:
+      context: ./Docker
+      dockerfile: redis.Dockerfile
+    ports:
+      - "6379:6379"
